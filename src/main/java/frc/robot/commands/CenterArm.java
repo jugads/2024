@@ -4,12 +4,21 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Arm;
 
 public class CenterArm extends Command {
   /** Creates a new CenterArm. */
-  public CenterArm() {
+  PIDController controller;
+  Arm m_arm;
+  double desiredAngle = 0.;
+  double currentAngle;
+  public CenterArm(Arm arm) {
+    controller = new PIDController(0.015, 0.0, 0.000005);
+    m_arm = arm;
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_arm);
   }
 
   // Called when the command is initially scheduled.
@@ -18,7 +27,10 @@ public class CenterArm extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() { // Replace with desired angle`
+   currentAngle = -controller.calculate(desiredAngle, m_arm.getAngle());
+   m_arm.moveArm(currentAngle);
+  }
 
   // Called once the command ends or is interrupted.
   @Override

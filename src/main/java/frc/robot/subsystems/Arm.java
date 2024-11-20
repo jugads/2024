@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.EncoderType;
+
+// import frc.robot.Constants.ArmConstants;
+import static frc.robot.Constants.ArmConstants.*;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -28,11 +31,18 @@ public class Arm extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Motor Speed", m_leftMotor.get());
-    SmartDashboard.putNumber("Encoder Position", m_encoder.getAbsolutePosition());
+    SmartDashboard.putNumber("Encoder Position", getAngle());
+    SmartDashboard.putNumber("Position", getPosition());
   }
 
   public void moveArm(double speed) {
     m_leftMotor.set(speed);
     m_rightMotor.set(speed);
+  }
+  public double getAngle() {
+    return (m_encoder.get()-kEncoderOffset)*360;
+  }
+  public double getPosition() {
+    return m_encoder.get()-kEncoderOffset;
   }
 }

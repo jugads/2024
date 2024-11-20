@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.CenterArm;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.StopArm;
 import frc.robot.subsystems.Arm;
@@ -45,6 +46,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     m_driverController.leftBumper().whileTrue(new MoveArm(0.2, m_arm));
     m_driverController.rightBumper().whileTrue(new MoveArm(-0.2, m_arm));
+    m_driverController.x().whileTrue(new CenterArm(m_arm));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     
