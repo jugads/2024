@@ -21,14 +21,12 @@ public class Arm extends SubsystemBase {
   public Arm() {
     m_leftMotor = new CANSparkMax(19, MotorType.kBrushless);
     m_rightMotor = new CANSparkMax(20, MotorType.kBrushless);
-    m_encoder = new DutyCycleEncoder(4);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Motor Speed", m_leftMotor.get());
-    SmartDashboard.putNumber("Encoder Position", m_encoder.getAbsolutePosition());
   }
 
   public void moveArm(double speed) {
