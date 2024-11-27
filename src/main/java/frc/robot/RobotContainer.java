@@ -5,9 +5,13 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.ArmToAngle;
 import frc.robot.commands.MoveArm;
 import frc.robot.commands.StopArm;
 import frc.robot.subsystems.Arm;
+
+import static frc.robot.Constants.ArmConstants.*;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -43,8 +47,11 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    m_driverController.leftBumper().whileTrue(new MoveArm(0.2, m_arm));
-    m_driverController.rightBumper().whileTrue(new MoveArm(-0.2, m_arm));
+    m_driverController.leftBumper().whileTrue(new MoveArm(0.5, m_arm));
+    m_driverController.rightBumper().whileTrue(new MoveArm(-0.5, m_arm));
+    m_driverController.x().whileTrue(new ArmToAngle(m_arm, 0.));
+    m_driverController.povDown().whileTrue(new ArmToAngle(m_arm, kMinAngle));
+    m_driverController.povUp().whileTrue(new ArmToAngle(m_arm, kMaxAngle));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     

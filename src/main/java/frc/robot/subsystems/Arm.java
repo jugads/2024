@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import static frc.robot.Constants.ArmConstants.*;
 
 public class Arm extends SubsystemBase {
   /** Creates a new Arm. */
@@ -21,16 +22,25 @@ public class Arm extends SubsystemBase {
   public Arm() {
     m_leftMotor = new CANSparkMax(19, MotorType.kBrushless);
     m_rightMotor = new CANSparkMax(20, MotorType.kBrushless);
+    m_encoder = new DutyCycleEncoder(4);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Motor Speed", m_leftMotor.get());
+    SmartDashboard.putNumber("Encoder Angle", getAngle());
+    SmartDashboard.putNumber("Encoder Raw position", getPosition());
   }
 
   public void moveArm(double speed) {
     m_leftMotor.set(speed);
     m_rightMotor.set(speed);
+  }
+  public double getPosition() {
+    return m_encoder.get()-kEncoderOffset;
+  }
+  public double getAngle() {
+    return getPosition()*360;
   }
 }

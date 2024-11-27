@@ -16,4 +16,9 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static class ArmConstants {
+    public static final double kEncoderOffset = 0.65115;
+    public static final double kMaxAngle = 68.;
+    public static final double kMinAngle = -68.;
+  }
 }
